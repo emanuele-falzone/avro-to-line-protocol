@@ -1,0 +1,10 @@
+language: bash
+services: docker
+
+build_push:
+  on:
+    tags: true
+  script:
+    - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t ${DOCKER_USERNAME}/avro-to-line-protocol:${TRAVIS_TAG:1} .
+    - docker push ${DOCKER_USERNAME}/avro-to-line-protocol:${TRAVIS_TAG:1}
